@@ -1,0 +1,39 @@
+<script>
+	$(function() {
+		$( "#accordion" ).accordion({
+			autoHeight: false,
+			navigation: true,
+			collapsible: true,
+			alwaysOpen: false,
+       		active:false
+		});
+	});
+	</script>
+
+
+<div id="accordion">
+	<h3><a href="#section1">Check List</a></h3>
+		<div>
+			<ul>
+				<li><%= link_to "Add", :controller => "check_list", :action => "new" %></li>
+				<li><%= link_to "My Lists", :controller => "check_list", :action => "show" %></li>
+				<li><%= link_to "Collaborate", :controller => "check_list", :action => "show_eligible_lists" %></li>
+				<li><%= link_to "Requests", :controller => "check_list", :action => "pending_requests" %></li>
+			</ul>
+		</div>
+	<h3><a href="#section2">My Account</a></h3>
+		<div>
+			<ul>
+				<li><%= link_to 'Edit', edit_account_path %></li>
+				<li><%= link_to "Upgrade", :controller => "check_list", :action => "show" %></li>
+			</ul>
+		</div>
+	<h3><a href="#section3">Buddies</a></h3>
+		<div>
+			<ul>
+				<li><%= link_to 'My Buddies', :controller => "buddies", :action => "my_buddies" %></li>
+				<li><%= link_to "Find Buddies", :controller => "buddies", :action => "show" %></li>
+				<li><%= link_to "Pending", :controller => "buddies", :action => "pending" %></li>
+			</ul>
+		</div>
+</div>

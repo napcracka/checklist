@@ -1,0 +1,32 @@
+<script language="javascript">
+	/*		
+		TODO: Generalize this and put elsewhere
+	*/
+	function addBuddy(buddyId, domId)
+	{
+		$.ajax({
+   			type: "POST",
+   			url: "/buddies/add",
+   			data: "buddyId=" + buddyId,
+   			success: function(msg){
+   				$("#" + domId).replaceWith("REQUESTED");
+   				}
+   			});
+	}
+
+</script>
+
+<table>
+	<thead>
+		<tr>
+			<th>name</th>
+			<th>Action</th>
+		</tr>
+	 </thead>
+	 <% @buddies.each do |bud| %>
+		<tr>
+	 		<td><%= bud.login %></td>
+	 		<td id="<%= dom_id bud%>"><a onClick="javascript:addBuddy(<%= bud.id %>, '<%= dom_id bud %>');">add</a></td>
+	 	</tr>
+	<% end %>
+</table>

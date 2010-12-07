@@ -1,0 +1,16 @@
+<table>
+	<thead>
+		<tr>
+			<th>Login</th>
+			<th>Name</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @my_buddies.each do |bud| %>
+			<tr>
+				<td><%= bud.login %></td>
+				<td><%= "#{bud.first_name} #{bud.last_name}" %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

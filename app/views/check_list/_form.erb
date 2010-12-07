@@ -1,0 +1,78 @@
+<script>
+	var taskCount = 0;
+	var itemCount = 0;
+	
+	$(function() {
+		$( "#dialog-form" ).dialog({
+			autoOpen: false,
+			height: 400,
+			width: 400,
+			modal: true,
+			buttons: {
+				Ok: function() {
+					var addition = "<div class='ui-widget-content'>"+$("#typeHolder").val()+" :: " + $("#nameHolder").val() + "</div>";
+					if($("#typeHolder").val() == "task"){
+						$("#tasks").append(addition);
+						$("#hidden_nested").append("<input type='hidden' name='checklist[tasks_attributes]["+taskCount+"][name]' value='" +$("#nameHolder").val()+ "' />");
+						$("#hidden_nested").append("<input type='hidden' name='checklist[tasks_attributes]["+taskCount+"][description]' value='" +$("#descHolder").val()+ "' />");
+						taskCount++;
+					}
+					else{
+						$("#items").append(addition);
+						$("#hidden_nested").append("<input type='hidden' name='checklist[items_attributes]["+itemCount+"][name]' value='" +$("#nameHolder").val()+ "' />");
+						$("#hidden_nested").append("<input type='hidden' name='checklist[items_attributes]["+itemCount+"][description]' value='" +$("#descHolder").val()+ "' />");
+						itemCount++;
+					} 
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+		$( "#items" ).selectable();
+		$( "#tasks" ).selectable();
+		
+		$( "#datepicker" ).datepicker();
+
+		$( "#create-item-task" )
+			.button()
+			.click(function() {
+				$( "#dialog-form" ).dialog( "open" );
+			});
+			
+		$( "#slider" ).slider({
+			value:0,
+			min: 0,
+			max: 10,
+			step: 10,
+			slide: function( event, ui ) {
+				if(ui.value == 10){
+					$("#typeHolder").val('item');
+				}
+				else{
+					$("#typeHolder").val('task');
+				}
+			}
+		});
+	});
+</script>
+
+<div id="dialog-form" title="Add Item/Task">
+	Type: <select id="typeHolder">
+					<option value="task">Task</option>
+					<option value="item">Item</option>
+		 	 	</select> <br>
+	Name:<input type="text" id="nameHolder" /><br>
+	Description:<input type="text" id="descHolder" />
+</div>
+
+<%= form.label :checklist_name %><br />
+<%= form.text_field :name %><br />
+<br />
+<%= form.label :checklist_expiration %><br>
+<%= form.text_field :expiration_date, :id => "datepicker" %>
+<br>
+<br>
+<a id="create-item-task">Add Item/Task</a>
+
+<div id="items"></div>
+<div id="tasks"></div>
+<div id="hidden_nested"></div>

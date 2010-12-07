@@ -1,0 +1,33 @@
+<html>
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=windows-1252"/>
+		
+		
+		<%= stylesheet_link_tag 'cupertino/jquery-ui-1.8.6.custom' %>
+		<%= stylesheet_link_tag 'blueprint/ie' %>
+		<%= stylesheet_link_tag 'blueprint/print' %>
+		<%= stylesheet_link_tag 'blueprint/screen' %>
+		<%= stylesheet_link_tag 'blueprint/grid' %>
+		<%= stylesheet_link_tag 'blueprint/forms' %>
+		<%= stylesheet_link_tag 'blueprint/typography' %>
+		<%= javascript_include_tag 'jquery-1.4.2.min' %>
+		<%= javascript_include_tag 'jquery-ui-1.8.6.custom.min' %>
+
+    <body> 
+    	<div class="container">
+    		<div class=Òspan-24 headerÓ>
+    			<%= render :partial => "shared/header" %>
+    		</div>
+    		<div class="span-16 colborder">
+    			<%= yield %>
+    		</div>
+    		<div class="span-4 last">
+    			<% if !current_user %>
+    				<%= yield :sidebar %> 
+    			<% else %>
+    				<%= render "shared/check_list_options" %>
+    			<% end %>
+    		</div>
+    	</div>
+    </body> 
+</html>

@@ -1,0 +1,91 @@
+<script language="javascript">
+	$(function(){
+		$( "#addInviteForm" ).dialog({
+			autoOpen: false,
+			height: 500,
+			width: 700,
+			modal: true,
+				Cancel: function() {
+					$( this ).dialog( "close" );
+				}
+		});
+		
+		
+	$( "#buddies li" ).draggable({
+			appendTo: "body",
+			helper: "clone"
+		});
+		$( "#invites ol" ).droppable({
+			activeClass: "ui-state-default",
+			hoverClass: "ui-state-hover",
+			accept: ":not(.ui-sortable-helper)",
+			drop: function( event, ui ) {
+				$( this ).find( ".placeholder" ).remove();
+				$( "<li></li>" ).text( ui.draggable.text() ).appendTo( this );
+			}
+		}).sortable({
+			items: "li:not(.placeholder)",
+			sort: function() {
+				// gets added unintentionally by droppable interacting with sortable
+				// using connectWithSortable fixes this, but doesn't allow you to customize active/hoverClass options
+				$( this ).removeClass( "ui-state-default" );
+			}
+		});
+	
+	});
+	
+	function inviteBuddies(checkListId)
+	{
+		$( "#addInviteForm" ).dialog( "open" );	
+	}
+</script>
+
+<table>
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Expires</th>
+			<th>Created</th>
+			<th>Action</th>
+		</tr>
+	 </thead>
+	 <% @my_checklists.each do |cl| %>	
+	 <tr>
+	 	<td><%= cl.name %></td>
+	 	<td><%= cl.expiration_date %></td>
+	 	<td><%= cl.created_at %></td>
+	 	<td><a href="javascript:inviteBuddies(<%= cl.id %>);">Invite Buddies</a></td>
+	 </tr>
+	 <% end %>
+	  <tr>
+	 	<td colspan='4'>
+	 		<%= will_paginate @my_checklists %>
+	 	</td>
+	 </tr>
+</table>
+
+
+
+
+
+<div id="addInviteForm">
+	<div id="buddies" class="span-5 colborder">
+		<h3>Buddies</h3>
+		<div>
+			<ul>
+				<li>iPhone</li>
+				<li>iPod</li>
+				<li>iPad</li>
+			</ul>
+		</div>
+	</div>
+
+	<div id="invites" class="span-4 last">
+		<h3>Invites</h3>
+		<div class="ui-widget-content">
+			<ol>
+				<li class="placeholder">Add your items here</li>
+			</ol>
+		</div>
+	</div>
+</div>

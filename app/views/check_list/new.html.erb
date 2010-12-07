@@ -1,0 +1,5 @@
+<% form_for @checklist, :url => {:controller => "check_list", :action => "create"} do |f| %>
+  <%= f.error_messages %>
+  <%= render :partial => "form", :object => f %>
+  <%= f.submit "Create", :class => "ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" %>
+<% end %>

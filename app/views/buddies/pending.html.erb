@@ -1,0 +1,34 @@
+<script language="javascript">
+
+	function approveUser(buddyId, status, element_id)
+	{
+		$.ajax({
+   			type: "POST",
+   			url: "/buddies/confirm_buddy",
+   			data: "buddyId=" + buddyId + "&status=" + status,
+   			success: function(msg){
+   				$("#" + element_id).replaceWith(status);
+   			}
+   		});
+	}
+</script>
+<table>
+	<thead>
+		<tr>
+			<th>Login</th>
+			<th>Name</th>
+			<th>Request Date</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @my_buddies.each do |bud| %>
+			<tr>
+				<td><%= bud.login %></td>
+				<td><%= "#{bud.first_name} #{bud.last_name}" %></td>
+				<td><%= bud.request_made %></td>
+				<td id="<%= dom_id bud %>"><a href="javascript:approveUser(<%= bud.id %>, '<%= Buddy::ACTIVE %>', '<%= dom_id bud %>');">Approve</a> / <a href="javascript:approveUser(<%= bud.id %>, '<%= Buddy::DENIED %>', '<%= dom_id bud %>');">Deny</a></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
